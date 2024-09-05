@@ -12,7 +12,7 @@
 
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat() : name_("none"), grade_(150)
+Bureaucrat::Bureaucrat() : name_("default"), grade_(150)
 {
 
 }
@@ -81,8 +81,8 @@ const char	*Bureaucrat::GradeTooHighException::what(void) const throw()
 	return ("Grade too high.");
 }
 
-std::ostream	&operator<<(std::ostream &o, Bureaucrat *a)
+std::ostream	&operator<<(std::ostream &o, Bureaucrat &a)
 {
-	o << a->getName() << ", bureaucrat grade " << a->getGrade();
+	o << a.getName() << ", bureaucrat grade " << a.getGrade();
 	return o;
 }

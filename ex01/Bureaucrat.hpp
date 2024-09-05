@@ -13,8 +13,8 @@
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
-# include "Form.hpp"
 # include <iostream>
+# include "Form.hpp"
 
 class	Form;
 
@@ -47,12 +47,18 @@ class	Bureaucrat
 
 	};
 
+	class SignedException : public std::exception
+	{
+		public:
+				virtual const char *what() const throw();
+	};
+
 	private:
 			const std::string	name_;
 			int					grade_;
 
 };
 
-std::ostream	&operator<<(std::ostream &o, Bureaucrat *a);
+std::ostream	&operator<<(std::ostream &o, Bureaucrat &a);
 
 #endif

@@ -1,67 +1,72 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.cpp                                           :+:      :+:    :+:   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgayout <mgayout@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 16:53:57 by mgayout           #+#    #+#             */
-/*   Updated: 2024/08/20 16:53:57 by mgayout          ###   ########.fr       */
+/*   Created: 2024/09/03 11:07:28 by mgayout           #+#    #+#             */
+/*   Updated: 2024/09/03 11:07:28 by mgayout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Form.hpp"
+#include "AForm.hpp"
 
-Form::Form() : name_("default"), signed_(false), signedGrade_(150), execGrade_(150)
+AForm::AForm() : name_("default"), target_("default"), signed_(false), signedGrade_(150), execGrade_(150)
 {
 
 }
 
-Form::Form(std::string name, int signedGrade, int execGrade) : name_(name), signed_(false), signedGrade_(signedGrade), execGrade_(execGrade)
+AForm::AForm(std::string name, std::string target, int signedGrade, int execGrade) : name_(name), target_(target), signed_(false), signedGrade_(signedGrade), execGrade_(execGrade)
 {
 	if (this->getSignedGrade() > 150 || this->getExecGrade() > 150)
-		throw(GradeTooLowException());
+		throw(AForm::GradeTooLowException());
 	else if (this->getSignedGrade() < 1 || this->getExecGrade() < 1)
-		throw(GradeTooHighException());
+		throw(AForm::GradeTooHighException());
 }
 
-Form::Form(const Form& other) : name_(other.getName()), signed_(other.signed_), signedGrade_(other.signedGrade_), execGrade_(other.execGrade_)
+AForm::AForm(const AForm& other) : name_(other.getName()), target_(other.getTarget()), signed_(other.signed_), signedGrade_(other.signedGrade_), execGrade_(other.execGrade_)
 {
 
 }
 
-Form& Form::operator=(const Form& other)
+AForm& AForm::operator=(const AForm& other)
 {
 	*this = other;
 	return *this;
 }
 
-Form::~Form()
+AForm::~AForm()
 {
 
 }
 
-std::string	Form::getName() const
+std::string	AForm::getName() const
 {
 	return this->name_;
 }
 
-bool	Form::getSigned() const
+std::string AForm::getTarget() const
+{
+	return this->target_;
+}
+
+bool	AForm::getSigned() const
 {
 	return this->signed_;
 }
 
-int	Form::getSignedGrade() const
+int	AForm::getSignedGrade() const
 {
 	return this->signedGrade_;
 }
 
-int	Form::getExecGrade() const
+int	AForm::getExecGrade() const
 {
 	return this->execGrade_;
 }
 
-void	Form::beSigned(Bureaucrat &a)
+void	AForm::beSigned(Bureaucrat &a)
 {
 	if (a.getGrade() > this->getSignedGrade() || this->getSigned())
 		throw(SignedException());
@@ -72,22 +77,27 @@ void	Form::beSigned(Bureaucrat &a)
 	}
 }
 
-const char	*Form::GradeTooLowException::what(void) const throw()
+const char	*AForm::GradeTooLowException::what(void) const throw()
 {
 	return ("Grade too low.");
 }
 
-const char	*Form::GradeTooHighException::what(void) const throw()
+const char	*AForm::GradeTooHighException::what(void) const throw()
 {
 	return ("Grade too high.");
 }
 
-const char	*Form::SignedException::what(void) const throw()
+const char	*AForm::SignedException::what(void) const throw()
 {
 	return ("Couldn't sign form because is already signed or Bureacrate's grade is lower than Form's grade.");
 }
 
-std::ostream	&operator<<(std::ostream &o, Form &a)
+const char	*AForm::ExecuteException::what(void) const throw()
+{
+	return ("Couldn't execute Form because Form isn't signed or Bureacrate's grade is lower than Form's grade.");
+}
+
+std::ostream	&operator<<(std::ostream &o, AForm &a)
 {
 	if (a.getSigned())
 		o << a.getName() << ", signed, signed grade " << a.getSignedGrade() << ", exec grade " << a.getExecGrade();

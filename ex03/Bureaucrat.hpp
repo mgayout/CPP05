@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgayout <mgayout@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 12:06:13 by mgayout           #+#    #+#             */
-/*   Updated: 2024/08/20 12:06:13 by mgayout          ###   ########.fr       */
+/*   Created: 2024/09/03 11:07:44 by mgayout           #+#    #+#             */
+/*   Updated: 2024/09/03 11:07:44 by mgayout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 # define BUREAUCRAT_HPP
 
 # include <iostream>
+# include "AForm.hpp"
 
-class Bureaucrat
+class	AForm;
+
+class	Bureaucrat
 {
 	public:
 			Bureaucrat();
@@ -28,19 +31,33 @@ class Bureaucrat
 			void		setGrade(int grade);
 			void		gradeIncr();
 			void		gradeDecr();
+			void		signForm(AForm &a);
+			void		executeForm(const AForm& form) const;
 
 	class GradeTooLowException : public std::exception
 	{
 		public:
-				virtual const char *what() const throw();
+				virtual const char* what() const throw();
 
 	};
 
 	class GradeTooHighException : public std::exception
 	{
 		public:
-				virtual const char *what() const throw();
+				virtual const char* what() const throw();
 
+	};
+
+	class SignedException : public std::exception
+	{
+		public:
+				virtual const char *what() const throw();
+	};
+	
+	class ExecuteException : public std::exception
+	{
+		public:
+				virtual const char* what() const throw();
 	};
 
 	private:
