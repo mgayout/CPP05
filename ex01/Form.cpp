@@ -32,7 +32,7 @@ Form::Form(const Form& other) : name_(other.getName()), signed_(other.signed_), 
 
 Form& Form::operator=(const Form& other)
 {
-	*this = other;
+	(void)other;
 	return *this;
 }
 

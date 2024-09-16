@@ -32,7 +32,7 @@ Bureaucrat::Bureaucrat(const Bureaucrat& other) : name_(other.getName()), grade_
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other)
 {
-	*this = other;
+	this->grade_ = other.grade_;
 	return *this;
 }
 

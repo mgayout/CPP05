@@ -32,7 +32,7 @@ AForm::AForm(const AForm& other) : name_(other.getName()), target_(other.getTarg
 
 AForm& AForm::operator=(const AForm& other)
 {
-	*this = other;
+	(void)other;
 	return *this;
 }
 
